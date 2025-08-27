@@ -50,8 +50,6 @@ CONDITIONS = {
 
 # --- Streamlit 웹 앱 UI 구성 ---
 st.set_page_config(page_title="실험용 챗봇", page_icon="🧪")
-
-# --- ✅ UI 개선: 메인 화면에 선택된 조건 표시 ---
 col1, col2 = st.columns([0.7, 0.3])
 with col1:
     st.title("실험용 챗봇 🧪")
@@ -64,9 +62,7 @@ with st.sidebar:
     st.header("실험 조건 선택")
     if "selected_condition" not in st.session_state:
         st.session_state.selected_condition = None
-
     for condition_name in CONDITIONS.keys():
-        # --- ✅ UI 개선: 선택된 버튼 타입 변경 ---
         button_type = "primary" if st.session_state.selected_condition == condition_name else "secondary"
         if st.button(condition_name, type=button_type):
             st.session_state.selected_condition = condition_name
@@ -116,9 +112,9 @@ if prompt := st.chat_input("메시지를 입력하세요...", disabled=chat_inpu
                 "contents": history + [{"role": "user", "parts": [{"text": prompt}]}],
                 "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
                 "generationConfig": {
-                    "maxOutputTokens": 2048,
+                    "maxOutputTokens": 2048, # 답변 최대 길이를 넉넉하게 설정
                 },
-                "safetySettings": [
+                "safetySettings": [ # 안전 필터 기준을 완화
                     {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
                     {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
                     {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
@@ -132,6 +128,7 @@ if prompt := st.chat_input("메시지를 입력하세요...", disabled=chat_inpu
 
             response_json = response.json()
             
+            # 응답이 비어있는 경우에 대한 예외 처리
             if not response_json.get('candidates'):
                 ai_response = "죄송합니다, 답변을 생성하는 데 문제가 발생했습니다. (응답 없음)"
                 st.warning(f"API 응답에 'candidates'가 없습니다. 전체 응답: {response_json}")
