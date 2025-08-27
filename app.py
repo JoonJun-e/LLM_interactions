@@ -10,7 +10,7 @@ API_KEY = st.secrets.get("API_KEY", os.getenv("API_KEY"))
 # --------------------------------------------------------------------
 
 # API 엔드포인트 URL
-MODEL_NAME = "gemini-2.5-pro-preview-05-20"
+MODEL_NAME = "gemini-2.5-pro"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
 # --- ✅ 선제적 상황 부여를 위한 업무 목록 ✅ ---
