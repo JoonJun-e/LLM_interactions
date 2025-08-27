@@ -8,7 +8,7 @@ API_KEY = st.secrets.get("API_KEY", os.getenv("API_KEY"))
 # --------------------------------------------------------------------
 
 # API 엔드포인트 URL
-MODEL_NAME = "gemini-2.5-flash-preview-05-20"
+MODEL_NAME = "gemini-2.5-pro-preview-05-20"
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 
 # --- ✅ 페르소나 설정 (시스템 프롬프트) ✅ ---
